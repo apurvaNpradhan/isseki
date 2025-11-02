@@ -1,0 +1,37 @@
+{
+	"name": "@isseki/db",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./src/index.ts"
+		},
+		"./*": {
+			"types": "./dist/*.d.ts",
+			"default": "./src/*.ts"
+		}
+	},
+	"scripts": {
+		"build": "tsdown",
+		"db:push": "drizzle-kit push",
+		"db:studio": "drizzle-kit studio",
+		"db:generate": "drizzle-kit generate",
+		"db:migrate": "drizzle-kit migrate"
+	},
+	"devDependencies": {
+		"@types/ws": "^8.18.1",
+		"drizzle-kit": "^0.31.2",
+		"tsdown": "catalog:"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@neondatabase/serverless": "^1.0.1",
+		"dotenv": "catalog:",
+		"drizzle-orm": "^0.44.2",
+		"uuid": "^13.0.0",
+		"ws": "^8.18.3",
+		"zod": "catalog:"
+	}
+}
