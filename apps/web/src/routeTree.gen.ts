@@ -12,8 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as publicRouteRouteImport } from './routes/(public)/route'
 import { Route as authenticatedRouteRouteImport } from './routes/(authenticated)/route'
 import { Route as publicIndexRouteImport } from './routes/(public)/index'
-import { Route as authenticatedDashboardRouteImport } from './routes/(authenticated)/dashboard'
-import { Route as publicauthSignUpIndexRouteImport } from './routes/(public)/(auth)/sign-up/index'
+import { Route as authenticatedSpacesIndexRouteImport } from './routes/(authenticated)/spaces/index'
+import { Route as authenticatedProjectsIndexRouteImport } from './routes/(authenticated)/projects/index'
+import { Route as authenticatedInboxIndexRouteImport } from './routes/(authenticated)/inbox/index'
+import { Route as publicauthSignUpRouteImport } from './routes/(public)/(auth)/sign-up'
+import { Route as authenticatedSpacesIdRouteImport } from './routes/(authenticated)/spaces/$id'
 import { Route as publicauthSignInIndexRouteImport } from './routes/(public)/(auth)/sign-in/index'
 
 const publicRouteRoute = publicRouteRouteImport.update({
@@ -29,15 +32,32 @@ const publicIndexRoute = publicIndexRouteImport.update({
   path: '/',
   getParentRoute: () => publicRouteRoute,
 } as any)
-const authenticatedDashboardRoute = authenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const authenticatedSpacesIndexRoute =
+  authenticatedSpacesIndexRouteImport.update({
+    id: '/spaces/',
+    path: '/spaces/',
+    getParentRoute: () => authenticatedRouteRoute,
+  } as any)
+const authenticatedProjectsIndexRoute =
+  authenticatedProjectsIndexRouteImport.update({
+    id: '/projects/',
+    path: '/projects/',
+    getParentRoute: () => authenticatedRouteRoute,
+  } as any)
+const authenticatedInboxIndexRoute = authenticatedInboxIndexRouteImport.update({
+  id: '/inbox/',
+  path: '/inbox/',
   getParentRoute: () => authenticatedRouteRoute,
 } as any)
-const publicauthSignUpIndexRoute = publicauthSignUpIndexRouteImport.update({
-  id: '/(auth)/sign-up/',
-  path: '/sign-up/',
+const publicauthSignUpRoute = publicauthSignUpRouteImport.update({
+  id: '/(auth)/sign-up',
+  path: '/sign-up',
   getParentRoute: () => publicRouteRoute,
+} as any)
+const authenticatedSpacesIdRoute = authenticatedSpacesIdRouteImport.update({
+  id: '/spaces/$id',
+  path: '/spaces/$id',
+  getParentRoute: () => authenticatedRouteRoute,
 } as any)
 const publicauthSignInIndexRoute = publicauthSignInIndexRouteImport.update({
   id: '/(auth)/sign-in/',
@@ -46,39 +66,65 @@ const publicauthSignInIndexRoute = publicauthSignInIndexRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/dashboard': typeof authenticatedDashboardRoute
   '/': typeof publicIndexRoute
+  '/spaces/$id': typeof authenticatedSpacesIdRoute
+  '/sign-up': typeof publicauthSignUpRoute
+  '/inbox': typeof authenticatedInboxIndexRoute
+  '/projects': typeof authenticatedProjectsIndexRoute
+  '/spaces': typeof authenticatedSpacesIndexRoute
   '/sign-in': typeof publicauthSignInIndexRoute
-  '/sign-up': typeof publicauthSignUpIndexRoute
 }
 export interface FileRoutesByTo {
-  '/dashboard': typeof authenticatedDashboardRoute
   '/': typeof publicIndexRoute
+  '/spaces/$id': typeof authenticatedSpacesIdRoute
+  '/sign-up': typeof publicauthSignUpRoute
+  '/inbox': typeof authenticatedInboxIndexRoute
+  '/projects': typeof authenticatedProjectsIndexRoute
+  '/spaces': typeof authenticatedSpacesIndexRoute
   '/sign-in': typeof publicauthSignInIndexRoute
-  '/sign-up': typeof publicauthSignUpIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(authenticated)': typeof authenticatedRouteRouteWithChildren
   '/(public)': typeof publicRouteRouteWithChildren
-  '/(authenticated)/dashboard': typeof authenticatedDashboardRoute
   '/(public)/': typeof publicIndexRoute
+  '/(authenticated)/spaces/$id': typeof authenticatedSpacesIdRoute
+  '/(public)/(auth)/sign-up': typeof publicauthSignUpRoute
+  '/(authenticated)/inbox/': typeof authenticatedInboxIndexRoute
+  '/(authenticated)/projects/': typeof authenticatedProjectsIndexRoute
+  '/(authenticated)/spaces/': typeof authenticatedSpacesIndexRoute
   '/(public)/(auth)/sign-in/': typeof publicauthSignInIndexRoute
-  '/(public)/(auth)/sign-up/': typeof publicauthSignUpIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/dashboard' | '/' | '/sign-in' | '/sign-up'
+  fullPaths:
+    | '/'
+    | '/spaces/$id'
+    | '/sign-up'
+    | '/inbox'
+    | '/projects'
+    | '/spaces'
+    | '/sign-in'
   fileRoutesByTo: FileRoutesByTo
-  to: '/dashboard' | '/' | '/sign-in' | '/sign-up'
+  to:
+    | '/'
+    | '/spaces/$id'
+    | '/sign-up'
+    | '/inbox'
+    | '/projects'
+    | '/spaces'
+    | '/sign-in'
   id:
     | '__root__'
     | '/(authenticated)'
     | '/(public)'
-    | '/(authenticated)/dashboard'
     | '/(public)/'
+    | '/(authenticated)/spaces/$id'
+    | '/(public)/(auth)/sign-up'
+    | '/(authenticated)/inbox/'
+    | '/(authenticated)/projects/'
+    | '/(authenticated)/spaces/'
     | '/(public)/(auth)/sign-in/'
-    | '/(public)/(auth)/sign-up/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -109,19 +155,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicIndexRouteImport
       parentRoute: typeof publicRouteRoute
     }
-    '/(authenticated)/dashboard': {
-      id: '/(authenticated)/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof authenticatedDashboardRouteImport
+    '/(authenticated)/spaces/': {
+      id: '/(authenticated)/spaces/'
+      path: '/spaces'
+      fullPath: '/spaces'
+      preLoaderRoute: typeof authenticatedSpacesIndexRouteImport
       parentRoute: typeof authenticatedRouteRoute
     }
-    '/(public)/(auth)/sign-up/': {
-      id: '/(public)/(auth)/sign-up/'
+    '/(authenticated)/projects/': {
+      id: '/(authenticated)/projects/'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof authenticatedProjectsIndexRouteImport
+      parentRoute: typeof authenticatedRouteRoute
+    }
+    '/(authenticated)/inbox/': {
+      id: '/(authenticated)/inbox/'
+      path: '/inbox'
+      fullPath: '/inbox'
+      preLoaderRoute: typeof authenticatedInboxIndexRouteImport
+      parentRoute: typeof authenticatedRouteRoute
+    }
+    '/(public)/(auth)/sign-up': {
+      id: '/(public)/(auth)/sign-up'
       path: '/sign-up'
       fullPath: '/sign-up'
-      preLoaderRoute: typeof publicauthSignUpIndexRouteImport
+      preLoaderRoute: typeof publicauthSignUpRouteImport
       parentRoute: typeof publicRouteRoute
+    }
+    '/(authenticated)/spaces/$id': {
+      id: '/(authenticated)/spaces/$id'
+      path: '/spaces/$id'
+      fullPath: '/spaces/$id'
+      preLoaderRoute: typeof authenticatedSpacesIdRouteImport
+      parentRoute: typeof authenticatedRouteRoute
     }
     '/(public)/(auth)/sign-in/': {
       id: '/(public)/(auth)/sign-in/'
@@ -134,11 +201,17 @@ declare module '@tanstack/react-router' {
 }
 
 interface authenticatedRouteRouteChildren {
-  authenticatedDashboardRoute: typeof authenticatedDashboardRoute
+  authenticatedSpacesIdRoute: typeof authenticatedSpacesIdRoute
+  authenticatedInboxIndexRoute: typeof authenticatedInboxIndexRoute
+  authenticatedProjectsIndexRoute: typeof authenticatedProjectsIndexRoute
+  authenticatedSpacesIndexRoute: typeof authenticatedSpacesIndexRoute
 }
 
 const authenticatedRouteRouteChildren: authenticatedRouteRouteChildren = {
-  authenticatedDashboardRoute: authenticatedDashboardRoute,
+  authenticatedSpacesIdRoute: authenticatedSpacesIdRoute,
+  authenticatedInboxIndexRoute: authenticatedInboxIndexRoute,
+  authenticatedProjectsIndexRoute: authenticatedProjectsIndexRoute,
+  authenticatedSpacesIndexRoute: authenticatedSpacesIndexRoute,
 }
 
 const authenticatedRouteRouteWithChildren =
@@ -146,14 +219,14 @@ const authenticatedRouteRouteWithChildren =
 
 interface publicRouteRouteChildren {
   publicIndexRoute: typeof publicIndexRoute
+  publicauthSignUpRoute: typeof publicauthSignUpRoute
   publicauthSignInIndexRoute: typeof publicauthSignInIndexRoute
-  publicauthSignUpIndexRoute: typeof publicauthSignUpIndexRoute
 }
 
 const publicRouteRouteChildren: publicRouteRouteChildren = {
   publicIndexRoute: publicIndexRoute,
+  publicauthSignUpRoute: publicauthSignUpRoute,
   publicauthSignInIndexRoute: publicauthSignInIndexRoute,
-  publicauthSignUpIndexRoute: publicauthSignUpIndexRoute,
 }
 
 const publicRouteRouteWithChildren = publicRouteRoute._addFileChildren(

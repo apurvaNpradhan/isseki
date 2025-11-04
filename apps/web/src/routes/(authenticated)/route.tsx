@@ -3,12 +3,9 @@ import { getUser } from "@/functions/get-user";
 
 export const Route = createFileRoute("/(authenticated)")({
 	component: RouteComponent,
-	beforeLoad: async () => {
-		const session = await getUser();
-		return { session };
-	},
 	loader: async ({ context }) => {
-		if (!context.session) {
+		const session = await getUser();
+		if (!session) {
 			throw redirect({
 				to: "/sign-in",
 			});

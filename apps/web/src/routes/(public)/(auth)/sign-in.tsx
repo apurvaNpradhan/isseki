@@ -36,7 +36,7 @@ export default function SignIn() {
 							className={cn("w-full gap-2")}
 							disabled={loading}
 							onClick={async () => {
-								await signIn.social(
+								const { data } = await signIn.social(
 									{
 										provider: "google",
 										callbackURL: "/dashboard",
@@ -88,6 +88,7 @@ export default function SignIn() {
 										provider: "github",
 										callbackURL: `${import.meta.env.VITE_BASE_URL}/dashboard`,
 									},
+
 									{
 										onRequest: (ctx) => {
 											setLoading(true);

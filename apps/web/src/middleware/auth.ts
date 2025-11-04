@@ -6,6 +6,7 @@ export const authMiddleware = createMiddleware().server(
 		const session = await authClient.getSession({
 			fetchOptions: {
 				headers: request.headers,
+				credentials: "include",
 				throw: true,
 			},
 		});
